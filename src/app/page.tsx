@@ -1,65 +1,105 @@
-import Image from "next/image";
+import Link from "next/link";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <div className="bg-purple flex items-center justify-center h-full p-10">
+      <div className="bg-gray w-[60%] rounded-2xl p-10 h-full">
+        {/* TOP SECTION  */}
+        <div className="rounded-md flex justify-between h-[10%] gap-10 mb-10">
+          <div className="bg-white rounded-4xl flex-1 flex flex-col items-center justify-center">
+            <p className="mb-2">All employes</p>
+            <h1 className="font-bold">500</h1>
+          </div>
+
+          <div className="bg-white rounded-4xl flex-1 flex items-center justify-center gap-10">
+            <CheckCircleOutlineIcon
+              style={{ fontSize: "30px", color: "#37BC8F" }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <div className="flex flex-col items-center justify-center">
+              <p className="">Absent</p>
+              <h1 className="font-bold">300</h1>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-4xl flex-1 flex items-center justify-center gap-10">
+            <CancelIcon style={{ fontSize: "30px", color: "#CE5A5D" }} />
+            <div className="flex flex-col items-center justify-center">
+              <p className="">Absent</p>
+              <h1 className="font-bold">300</h1>
+            </div>
+          </div>
         </div>
-      </main>
+
+        {/* CENTER SECTION  */}
+        <div className="flex gap-10">
+          <div className="w-[60%]">
+            <div className="bg-white border-10 border-purple rounded-3xl h-[400px]"></div>
+
+            <div className="bg-white rounded-3xl mt-5 flex justify-between items-center p-5 px-10">
+              <div className="flex gap-5 items-center">
+                <div className="h-[100px] w-[100px] rounded-full border-3 border-purple"></div>
+
+                <div>
+                  <h1 className="font-bold">Hohn.D</h1>
+                  <p>ID:1234567</p>
+                  <p>Bolim: JXX</p>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <CheckCircleOutlineIcon
+                  fontSize="large"
+                  style={{ color: "#37BC8F" }}
+                />
+                <p>Present</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-[40%] bg-white rounded-2xl p-5 px-10 max-h-full">
+            <h1 className="text-center font-medium">Present list</h1>
+
+            <ul className=" overflow-auto">
+              <li className="flex justify-between border-b border-b-gray">
+                <Link href="">D.John</Link>
+                <p>-10:45:33</p>
+              </li>
+
+              <li className="flex justify-between border-b border-b-gray">
+                <Link href="">D.John</Link>
+                <p>-10:45:33</p>
+              </li>
+
+              <li className="flex justify-between border-b border-b-gray">
+                <Link href="">D.John</Link>
+                <p>-10:45:33</p>
+              </li>
+
+              <li className="flex justify-between border-b border-b-gray">
+                <Link href="">D.John</Link>
+                <p>-10:45:33</p>
+              </li>
+
+              <li className="flex justify-between border-b border-b-gray">
+                <Link href="">D.John</Link>
+                <p>-10:45:33</p>
+              </li>
+
+              <li className="flex justify-between border-b border-b-gray">
+                <Link href="">D.John</Link>
+                <p>-10:45:33</p>
+              </li>
+
+              <li className="flex justify-between border-b border-b-gray">
+                <Link href="">D.John</Link>
+                <p>-10:45:33</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
