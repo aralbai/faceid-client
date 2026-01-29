@@ -2,50 +2,27 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function FaceSuccess() {
-  const [imageUrl, setImageUrl] = useState(null);
-  const [error, setError] = useState(false);
+export default function FaceSuccess({ users }: { users: any }) {
+  const [lastEmployee, setLastEmployee] = useState({});
 
-  // useEffect(() => {
-  //   const fetchFaceImage = async () => {
-  //     try {
-  //       const faceUrl =
-  //         "http://192.168.88.143/LOCALS/pic/enrlFace/0/0000000002.jpg";
+  useEffect(() => {
+    const fetchLastEmployee = async () => {
+      await axios
+        .get("http://localhost:5000/attendance/last")
+        .then((res) => setLastEmployee(res.data))
+        .catch((err) => console.log(err));
+    };
 
-  //       const res = await axios.get(
-  //         "http://localhost:5000/employee/face-image",
-  //         {
-  //           params: { url: faceUrl },
-  //           responseType: "blob", // 🔴 ENG MUHIM JOY
-  //         },
-  //       );
-
-  //       // blob → browser usable URL
-  //       const blobUrl = URL.createObjectURL(res.data);
-  //       setImageUrl(blobUrl);
-  //     } catch (err) {
-  //       console.error("Face image load failed", err);
-  //       setError(true);
-  //     }
-  //   };
-
-  //   fetchFaceImage();
-
-  //   // cleanup (memory leak bo‘lmasin)
-  //   return () => {
-  //     if (imageUrl) {
-  //       URL.revokeObjectURL(imageUrl);
-  //     }
-  //   };
-  // }, []);
+    fetchLastEmployee();
+  }, [users]);
 
   return (
     <div className="bg-white rounded-3xl mt-5 flex justify-between items-center p-5 px-10">
       <div className="flex gap-5 items-center">
         <div className="h-25 w-25 rounded-full border-3 border-purple overflow-hidden flex items-center justify-center">
-          {imageUrl && !error ? (
+          {lastEmployee ? (
             <img
-              src={imageUrl}
+              src={`images/${lastEmployee?.bolim}.png`}
               alt="face"
               className="w-full h-full object-cover rounded-full"
             />
@@ -55,15 +32,15 @@ export default function FaceSuccess() {
         </div>
 
         <div>
-          <h1 className="font-bold">Muxammed</h1>
-          <p>ID: JTSB</p>
-          <p>Bo‘lim: JXX</p>
+          <h1 className="font-bold">{lastEmployee?.name?.split("-")[1]}</h1>
+          <p>ID: {lastEmployee?.bolim}</p>
+          <p>Bo‘lim: {lastEmployee?.name?.split("-")[0]}</p>
         </div>
       </div>
 
       <div className="flex flex-col items-center">
         <CheckCircleOutlineIcon fontSize="large" style={{ color: "#37BC8F" }} />
-        <p>Present</p>
+        <p>Keldi</p>
       </div>
     </div>
   );
