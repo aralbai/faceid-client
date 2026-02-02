@@ -2,6 +2,19 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
+  "homepage": "https://github.com/aralbai/faceid-client#readme",
+  "bugs": {
+    "url": "https://github.com/aralbai/faceid-client/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aralbai/faceid-client.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -20,7 +33,8 @@
     "next": "16.1.5",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "socket.io-client": "^4.8.3"
+    "socket.io-client": "^4.8.3",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
