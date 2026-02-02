@@ -32,23 +32,21 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-purple flex items-center justify-center h-full p-10">
-      <div className="bg-gray w-[80%] rounded-2xl p-10 h-full">
-        {/* TOP SECTION  */}
-        <TopCounter attendance={users} />
+    <div className="bg-gray p-8 h-full">
+      {/* TOP SECTION  */}
+      <TopCounter attendance={users} />
 
-        {/* CENTER SECTION  */}
-        <div className="flex gap-10">
-          <div className="w-[50%]">
-            <div className="bg-white border-10 border-purple rounded-3xl h-100 flex justify-center items-center">
-              <VideoRtsp />
-            </div>
-
-            <FaceSuccess users={users} />
+      {/* CENTER SECTION  */}
+      <div className="flex gap-10">
+        <div className="w-[50%]">
+          <div className="bg-white border-10 border-purple rounded-3xl h-100 flex justify-center items-center">
+            <VideoRtsp />
           </div>
 
-          <Jurnal users={users} />
+          <FaceSuccess users={users} />
         </div>
+
+        <Jurnal users={users} />
       </div>
     </div>
   );
