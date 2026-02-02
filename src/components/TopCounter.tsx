@@ -2,6 +2,7 @@
 
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -20,28 +21,41 @@ export default function TopCounter({ attendance }: { attendance: any }) {
   }, []);
   return (
     <div className="rounded-md flex justify-between gap-10 mb-10">
-      <div className="bg-white rounded-4xl flex-1 flex flex-col items-center justify-center p-5">
-        <p className="mb-2">Шахсий таркиб сони</p>
-        <h1 className="font-bold text-3xl">{employee.length}</h1>
-      </div>
-      <div className="bg-white rounded-4xl flex-1 flex items-center justify-center gap-10">
-        <CheckCircleOutlineIcon
-          style={{ fontSize: "50px", color: "#37BC8F" }}
-        />
-        <div className="flex flex-col items-center justify-center">
-          <p className="">Машғулотга қатнашган ходимлар сони</p>
-          <h1 className="font-bold text-3xl" style={{ color: "#37BC8F" }}>
-            {attendance.length}
-          </h1>
+      <div className="bg-white rounded-md flex-1 p-5 shadow-card">
+        <h1 className="border-b-2 border-b-green text-green">
+          Shaxsiy tarkib soni
+        </h1>
+
+        <div className="bg-green rounded-md text-white flex justify-between items-center gap-10 p-8 mt-3">
+          <AccountCircleOutlinedIcon style={{ fontSize: "40px" }} />
+          <b className="text-4xl">{employee.length}</b>
         </div>
       </div>
-      <div className="bg-white rounded-4xl flex-1 flex items-center justify-center gap-10">
-        <CancelIcon style={{ fontSize: "50px", color: "#CE5A5D" }} />
-        <div className="flex flex-col items-center justify-center">
-          <p className="">Машғулотга қатнашмаган ходимлар сони</p>
-          <h1 className="font-bold text-3xl" style={{ color: "#CE5A5D" }}>
+
+      <div className="bg-green rounded-md flex-1 p-5 shadow-card">
+        <h1 className="border-b-2 border-b-gray text-white">
+          Mashg'ulotga qatnashgan xodimlar soni
+        </h1>
+
+        <div className="bg-white rounded-md text-green flex justify-between items-center gap-10 p-8 mt-3">
+          <CheckCircleOutlineIcon style={{ fontSize: "40px" }} />
+          <div>
+            <b className="text-4xl">{attendance.length}</b>
+            <p></p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-green rounded-md flex-1 p-5 shadow-card">
+        <h1 className="border-b-2 border-b-gray text-white">
+          Mashg'ulotga qatnashmagan xodimlar soni
+        </h1>
+
+        <div className="bg-white rounded-md text-green flex justify-between items-center gap-10 p-8 mt-3">
+          <CancelIcon style={{ fontSize: "40px", color: "#E73D1C" }} />
+          <b className="text-4xl text-red">
             {employee.length - attendance.length}
-          </h1>
+          </b>
         </div>
       </div>
     </div>

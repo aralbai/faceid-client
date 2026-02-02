@@ -38,8 +38,8 @@ export default function Home() {
 
       {/* CENTER SECTION  */}
       <div className="flex gap-10">
-        <div className="w-[50%]">
-          <div className="bg-white border-10 border-purple rounded-3xl h-100 flex justify-center items-center">
+        <div className="w-max h-max">
+          <div className="bg-green rounded-xl p-1  shadow-card flex justify-center items-center">
             <VideoRtsp />
           </div>
 

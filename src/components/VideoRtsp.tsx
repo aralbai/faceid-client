@@ -12,7 +12,12 @@ export default function VideoRtsp() {
       autoplay: true,
     });
 
-    return () => player.destroy();
+    return () => {
+      if (canvasRef.current) {
+        canvasRef.current.destroy(); // yoki close()
+        canvasRef.current = null;
+      }
+    };
   }, []);
 
   return (
@@ -20,7 +25,7 @@ export default function VideoRtsp() {
       ref={canvasRef}
       width="640"
       height="360"
-      style={{ background: "black" }}
+      style={{ background: "black", borderRadius: "10px" }}
     />
   );
 }

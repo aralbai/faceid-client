@@ -3,10 +3,19 @@
 
 
 @theme  {
-  --color-purple: #5D86E2;
-  --color-green: #37BC8F;
-  --color-gray: #DFE7FA;
-  --color-red: #CE5A5D;
+    --font-sans: var(--font-roboto);
+
+  --color-purple: #465EFD;
+  --color-bg-dark: #101828;
+  --color-gray-icon: #7A8395;
+  
+  --color-black: #191919;
+  --color-green: #2A9D91;
+  --color-red: #E73D1C;
+  --color-gray: #F3F4F6;
+  --color-gray-text: #525256;
+
+  --shadow-card: 0px 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -17,6 +26,14 @@ html, body {
 
 body {
   /* overflow: hidden; */
+  font-family: var(--font-roboto), system-ui, sans-serif;
+}
+
+.nagis {
+  background-image: url("/image.png");
+  background-repeat: repeat;
+  background-size: contain;
+  background-attachment: fixed;
 }
 
 .employeeList::-webkit-scrollbar {

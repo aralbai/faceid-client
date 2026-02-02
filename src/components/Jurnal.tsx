@@ -1,27 +1,74 @@
+"use client";
+
 import { format } from "date-fns";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import * as XLSX from "xlsx";
 
 export default function Jurnal({ users }: { users: any }) {
+  const [jurnal, setJurnal] = useState({});
+  useEffect(() => {
+    const fetchJurnal = async () => {
+      await axios
+        .get("http://localhost:5000/jurnal/6979b853e358ab5d3fb44cb1")
+        .then((res) => setJurnal(res.data))
+        .catch((err) => console.log(err));
+    };
+
+    fetchJurnal();
+  }, []);
+
+  const exportToExcel = () => {
+    if (!users || users.length === 0) return;
+
+    const data = users.map((user) => ({
+      "Bo‘lim": user?.employeeId?.bolim || "",
+      "Hodim F.I.SH": user?.employeeId?.name || "",
+      "Kelgan vaqti": format(new Date(user?.date), "dd.MM.yyyy HH:mm:ss"),
+      "Ketgan vaqti": "-", // agar yo‘q bo‘lsa
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Jurnal");
+
+    XLSX.writeFile(
+      workbook,
+      `jurnal_${format(new Date(jurnal?.date), "dd_MM_yyyy")}.xlsx`,
+    );
+  };
   return (
-    <div className="w-[50%] h-140 bg-white rounded-2xl p-5 flex flex-col">
-      <h1 className="text-center font-medium">Present list</h1>
+    <div className="w-full h-140 bg-white rounded-2xl p-5 flex flex-col shadow-card">
+      <h1 className="text-center font-medium">{jurnal?.name}</h1>
+
+      <div className="mt-3 flex justify-between mb-3" onClick={exportToExcel}>
+        <div></div>
+        <button
+          className="bg-green text-white py-2 px-4 rounded-md cursor-pointer font-medium"
+          onClick={exportToExcel}
+        >
+          Excelga saqlash
+        </button>
+      </div>
 
       <table className="employeeList overflow-auto p-5">
         <thead>
           <tr className="text-center">
             <th className="border border-gray px-2">Bo'lim</th>
-            <th className="border border-gray">Hodim F.I.SH</th>
+            <th className="border border-gray">Xodim F.I.SH</th>
             <th className="border border-gray">Kelgan vaqti</th>
             <th className="border border-gray">Ketgan vaqti</th>
           </tr>
         </thead>
         <tbody>
-          {users?.map((user, index) => (
-            <tr key={index} className="border border-gray">
+          {users?.map((user: any) => (
+            <tr key={user._id} className="border border-gray">
               <td className="border border-gray  px-2">
-                {user?.name.split("-")[0]}
+                {user?.employeeId?.bolim}
               </td>
               <td className="border border-gray  px-2">
-                {user?.name.split("-")[1]}
+                {user?.employeeId?.name}
               </td>
               <td className="border border-gray  px-2">
                 {format(new Date(user?.date), "dd.MM.yyyy HH.mm.ss")}

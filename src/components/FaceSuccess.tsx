@@ -16,15 +16,34 @@ export default function FaceSuccess({ users }: { users: any }) {
     fetchLastEmployee();
   }, [users]);
 
+  const formatEmployeeImageName = (employeeNo?: string) => {
+    if (!employeeNo) return null;
+
+    // A123456 → A-123456
+    return employeeNo.replace(/^([A-Za-z])(\d+)/, "$1-$2");
+  };
+
+  const imageName = formatEmployeeImageName(lastEmployee?.employeeNo);
+
   return (
-    <div className="bg-white rounded-3xl mt-5 flex justify-between items-center p-5 px-10">
+    <div className="bg-white rounded-3xl mt-5 flex justify-between items-center p-5 px-10 shadow-card">
       <div className="flex gap-5 items-center">
-        <div className="h-25 w-25 rounded-full border-3 border-purple overflow-hidden flex items-center justify-center">
+        <div className="h-25 w-25 rounded-full border-3 border-green overflow-hidden flex items-center justify-center p-2">
           {lastEmployee ? (
             <img
-              src={`images/${lastEmployee?.bolim}.png`}
-              alt="face"
-              className="w-full h-full object-cover rounded-full"
+              className=""
+              src={`/images/employee/${imageName}.png`}
+              onError={(e) => {
+                const img = e.currentTarget;
+
+                if (!img.dataset.fallback) {
+                  img.dataset.fallback = "1";
+                  img.src = `/images/employee/${imageName}.jpg`;
+                } else {
+                  img.src = `/images/employee/${imageName}.jpeg`;
+                }
+              }}
+              alt=""
             />
           ) : (
             <div className="text-sm text-gray-400">No Image</div>
@@ -32,9 +51,9 @@ export default function FaceSuccess({ users }: { users: any }) {
         </div>
 
         <div>
-          <h1 className="font-bold">{lastEmployee?.name?.split("-")[1]}</h1>
-          <p>ID: {lastEmployee?.bolim}</p>
-          <p>Bo‘lim: {lastEmployee?.name?.split("-")[0]}</p>
+          <h1 className="font-bold">{lastEmployee?.name}</h1>
+          <p>{lastEmployee?.employeeNo}</p>
+          <p>{lastEmployee?.employeeId?.bolim}</p>
         </div>
       </div>
 
