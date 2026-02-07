@@ -4,28 +4,29 @@ import { useEffect, useRef } from "react";
 import JSMpeg from "@cycjimmy/jsmpeg-player";
 
 export default function VideoRtsp() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const playerRef = useRef<any>(null);
 
   useEffect(() => {
-    const player = new JSMpeg.Player("ws://127.0.0.1:9999", {
+    if (!canvasRef.current) return;
+
+    playerRef.current = new JSMpeg.Player("ws://127.0.0.1:9999", {
       canvas: canvasRef.current,
       autoplay: true,
     });
 
     return () => {
-      if (canvasRef.current) {
-        canvasRef.current.destroy(); // yoki close()
-        canvasRef.current = null;
-      }
+      playerRef.current?.destroy();
+      playerRef.current = null;
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      width="640"
-      height="360"
-      style={{ background: "black", borderRadius: "10px" }}
+      width={640}
+      height={360}
+      style={{ background: "black", borderRadius: 10 }}
     />
   );
 }

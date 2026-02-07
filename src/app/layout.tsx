@@ -1,17 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Roboto } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -34,7 +24,7 @@ export default function RootLayout({
         <div className="flex h-screen">
           <Sidebar />
 
-          <div className="w-[85%] h-full overflow-auto bg-vector">
+          <div className="w-[85%] h-full overflow-y-auto bg-gray">
             {children}
           </div>
         </div>

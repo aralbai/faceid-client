@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { socket } from "@/socket";
-
-import VideoRtsp from "@/components/VideoRtsp";
 import FaceSuccess from "@/components/FaceSuccess";
 import TopCounter from "@/components/TopCounter";
 import Jurnal from "@/components/Jurnal";
@@ -12,7 +10,7 @@ export default function Home() {
   const [users, setUsers] = useState([]);
 
   const fetchAttendances = async () => {
-    const res = await fetch("http://localhost:5000/attendance");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/attendance`);
     const data = await res.json();
     setUsers(data);
   };
@@ -32,17 +30,13 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-gray p-8 h-full">
+    <div className="bg-gray h-full">
       {/* TOP SECTION  */}
       <TopCounter attendance={users} />
 
       {/* CENTER SECTION  */}
-      <div className="flex gap-10">
-        <div className="w-max h-max">
-          <div className="bg-green rounded-xl p-1  shadow-card flex justify-center items-center">
-            <VideoRtsp />
-          </div>
-
+      <div className="">
+        <div className="sticky top-0">
           <FaceSuccess users={users} />
         </div>
 

@@ -14,14 +14,17 @@
   --color-red: #E73D1C;
   --color-gray: #F3F4F6;
   --color-gray-text: #525256;
+  --color-border-bottom: #E8E8E8;
 
   --shadow-card: 0px 6px 20px rgba(0, 0, 0, 0.3);
+  --shadow-input: 0px 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 
 
 html, body {
-  min-height: 100%;
+  height: 100%;
+
 }
 
 body {
@@ -29,12 +32,6 @@ body {
   font-family: var(--font-roboto), system-ui, sans-serif;
 }
 
-.nagis {
-  background-image: url("/image.png");
-  background-repeat: repeat;
-  background-size: contain;
-  background-attachment: fixed;
-}
 
 .employeeList::-webkit-scrollbar {
   width: 8px;

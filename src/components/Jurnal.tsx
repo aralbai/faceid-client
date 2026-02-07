@@ -5,12 +5,38 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import * as XLSX from "xlsx";
 
-export default function Jurnal({ users }: { users: any }) {
-  const [jurnal, setJurnal] = useState({});
+// 1. Avval bitta foydalanuvchi obyekti qanday tuzilishga ega ekanligini belgilaymiz
+type User = {
+  employeeNo: string;
+  name?: string;
+  employeeId?: {
+    name?: string;
+    bolim?: string;
+  };
+  date?: string | Date;
+};
+
+// 2. So'ngra Props ichida shu turdan iborat massiv ekanligini ko'rsatamiz
+type UsersType = {
+  users: User[]; // User turidagi obyektlardan iborat massiv
+};
+
+type JurnalType = {
+  name: string;
+  date?: Date;
+};
+
+export default function Jurnal({ users }: UsersType) {
+  const [jurnal, setJurnal] = useState({
+    name: "",
+    date: "",
+  });
   useEffect(() => {
     const fetchJurnal = async () => {
       await axios
-        .get("http://localhost:5000/jurnal/6979b853e358ab5d3fb44cb1")
+        .get(
+          `${process.env.NEXT_PUBLIC_API_URL}/jurnal/6979b853e358ab5d3fb44cb1`,
+        )
         .then((res) => setJurnal(res.data))
         .catch((err) => console.log(err));
     };
@@ -24,7 +50,9 @@ export default function Jurnal({ users }: { users: any }) {
     const data = users.map((user) => ({
       "Bo‘lim": user?.employeeId?.bolim || "",
       "Hodim F.I.SH": user?.employeeId?.name || "",
-      "Kelgan vaqti": format(new Date(user?.date), "dd.MM.yyyy HH:mm:ss"),
+      "Kelgan vaqti": user.date
+        ? format(new Date(user?.date), "dd.MM.yyyy HH:mm:ss")
+        : "",
       "Ketgan vaqti": "-", // agar yo‘q bo‘lsa
     }));
 
@@ -39,13 +67,13 @@ export default function Jurnal({ users }: { users: any }) {
     );
   };
   return (
-    <div className="w-full h-140 bg-white rounded-2xl p-5 flex flex-col shadow-card">
+    <div className="w-full bg-white rounded-2xl p-5 flex flex-col shadow-card">
       <h1 className="text-center font-medium">{jurnal?.name}</h1>
 
       <div className="mt-3 flex justify-between mb-3" onClick={exportToExcel}>
         <div></div>
         <button
-          className="bg-green text-white py-2 px-4 rounded-md cursor-pointer font-medium"
+          className="bg-green text-white py-2 px-2 rounded-md cursor-pointer font-medium"
           onClick={exportToExcel}
         >
           Excelga saqlash
@@ -58,7 +86,6 @@ export default function Jurnal({ users }: { users: any }) {
             <th className="border border-gray px-2">Bo'lim</th>
             <th className="border border-gray">Xodim F.I.SH</th>
             <th className="border border-gray">Kelgan vaqti</th>
-            <th className="border border-gray">Ketgan vaqti</th>
           </tr>
         </thead>
         <tbody>

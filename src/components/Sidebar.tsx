@@ -17,7 +17,7 @@ export default function Sidebar() {
       : "text-white hover:bg-gray hover:text-green";
 
   return (
-    <div className="w-[15%] h-full overflow-auto p-5 bg-black">
+    <div className="w-[15%] h-full p-5 bg-black">
       <div className="flex flex-col items-center">
         <img src="/images/logo.png" alt="" className="w-[40%]" />
         <h1 className="font-bold text-center text-white mt-3">
@@ -69,7 +69,7 @@ export default function Sidebar() {
               "/employees",
             )}`}
           >
-            <RecentActorsOutlinedIcon /> Hodimlar
+            <RecentActorsOutlinedIcon /> Sohaviy xizmatlar
           </Link>
         </li>
       </ul>
