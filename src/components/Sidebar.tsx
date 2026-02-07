@@ -38,7 +38,6 @@ export default function Sidebar() {
             Scan
           </Link>
         </li>
-
         <li className="mb-3">
           <Link
             href="/stats"
@@ -49,10 +48,10 @@ export default function Sidebar() {
             <DashboardOutlinedIcon /> Statistika
           </Link>
         </li>
-
+        thi
         <li className="mb-3">
           <Link
-            href="/journal"
+            href="/jurnal"
             className={`block py-2 px-3 rounded-md flex items-center gap-4 font-bold transition ${isActive(
               "/journal",
             )}`}
@@ -61,7 +60,6 @@ export default function Sidebar() {
             Jurnal
           </Link>
         </li>
-
         <li className="mb-3">
           <Link
             href="/employees"
