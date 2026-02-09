@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
+import { Toaster } from "react-hot-toast";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -26,6 +27,13 @@ export default function RootLayout({
 
           <div className="w-[85%] h-full overflow-y-auto bg-gray">
             {children}
+
+            <Toaster
+              position="bottom-right"
+              toastOptions={{
+                duration: 3000,
+              }}
+            />
           </div>
         </div>
       </body>

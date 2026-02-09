@@ -7,6 +7,7 @@ import PermContactCalendarOutlinedIcon from "@mui/icons-material/PermContactCale
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import FilterCenterFocusOutlinedIcon from "@mui/icons-material/FilterCenterFocusOutlined";
 import RecentActorsOutlinedIcon from "@mui/icons-material/RecentActorsOutlined";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -30,7 +31,7 @@ export default function Sidebar() {
         <li className="mb-3">
           <Link
             href="/"
-            className={`block py-2 px-3 rounded-md flex items-center gap-4 font-bold transition ${isActive(
+            className={`py-2 px-3 rounded-md flex items-center gap-4 font-bold transition ${isActive(
               "/",
             )}`}
           >
@@ -41,18 +42,17 @@ export default function Sidebar() {
         <li className="mb-3">
           <Link
             href="/stats"
-            className={`block py-2 px-3 rounded-md flex items-center gap-4 font-bold transition ${isActive(
+            className={`py-2 px-3 rounded-md flex items-center gap-4 font-bold transition ${isActive(
               "/stats",
             )}`}
           >
             <DashboardOutlinedIcon /> Statistika
           </Link>
         </li>
-        thi
         <li className="mb-3">
           <Link
             href="/jurnal"
-            className={`block py-2 px-3 rounded-md flex items-center gap-4 font-bold transition ${isActive(
+            className={`py-2 px-3 rounded-md flex items-center gap-4 font-bold transition ${isActive(
               "/journal",
             )}`}
           >
@@ -63,11 +63,21 @@ export default function Sidebar() {
         <li className="mb-3">
           <Link
             href="/employees"
-            className={`block py-2 px-3 rounded-md flex items-center gap-4 font-bold transition ${isActive(
+            className={`py-2 px-3 rounded-md flex items-center gap-4 font-bold transition ${isActive(
               "/employees",
             )}`}
           >
             <RecentActorsOutlinedIcon /> Sohaviy xizmatlar
+          </Link>
+        </li>
+        <li className="mb-3">
+          <Link
+            href="/settings"
+            className={`py-2 px-3 rounded-md flex items-center gap-4 font-bold transition ${isActive(
+              "/settings",
+            )}`}
+          >
+            <SettingsIcon /> Sozlamalar
           </Link>
         </li>
       </ul>

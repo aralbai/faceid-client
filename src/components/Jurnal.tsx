@@ -3,78 +3,55 @@
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import * as XLSX from "xlsx";
+import EditIcon from "@mui/icons-material/Edit";
+import EditActiveJurnal from "./modals/EditActiveJurnal";
+import { formatInTimeZone } from "date-fns-tz";
+import { exportToExcel } from "@/common/exportToExcel";
 
-// 1. Avval bitta foydalanuvchi obyekti qanday tuzilishga ega ekanligini belgilaymiz
-type User = {
-  employeeNo: string;
-  name?: string;
-  employeeId?: {
-    name?: string;
-    bolim?: string;
-  };
-  date?: string | Date;
-};
-
-// 2. So'ngra Props ichida shu turdan iborat massiv ekanligini ko'rsatamiz
-type UsersType = {
-  users: User[]; // User turidagi obyektlardan iborat massiv
-};
-
-type JurnalType = {
-  name: string;
-  date?: Date;
-};
-
-export default function Jurnal({ users }: UsersType) {
-  const [jurnal, setJurnal] = useState({
+export default function Jurnal({ attendances, setReloadAttendances }: any) {
+  const [editModal, setEditModal] = useState(false);
+  const [activeJurnal, setActiveJurnal] = useState({
     name: "",
-    date: "",
+    date: new Date(),
   });
+
   useEffect(() => {
     const fetchJurnal = async () => {
       await axios
-        .get(
-          `${process.env.NEXT_PUBLIC_API_URL}/jurnal/6979b853e358ab5d3fb44cb1`,
-        )
-        .then((res) => setJurnal(res.data))
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/active-jurnal`)
+        .then((res) => setActiveJurnal(res.data))
         .catch((err) => console.log(err));
     };
 
     fetchJurnal();
-  }, []);
 
-  const exportToExcel = () => {
-    if (!users || users.length === 0) return;
+    setReloadAttendances((prev: any) => !prev);
+  }, [editModal]);
 
-    const data = users.map((user) => ({
-      "Bo‘lim": user?.employeeId?.bolim || "",
-      "Hodim F.I.SH": user?.employeeId?.name || "",
-      "Kelgan vaqti": user.date
-        ? format(new Date(user?.date), "dd.MM.yyyy HH:mm:ss")
-        : "",
-      "Ketgan vaqti": "-", // agar yo‘q bo‘lsa
-    }));
-
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Jurnal");
-
-    XLSX.writeFile(
-      workbook,
-      `jurnal_${format(new Date(jurnal?.date), "dd_MM_yyyy")}.xlsx`,
-    );
-  };
   return (
     <div className="w-full bg-white rounded-2xl p-5 flex flex-col shadow-card">
-      <h1 className="text-center font-medium">{jurnal?.name}</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-center font-medium">
+          {activeJurnal.name &&
+            activeJurnal?.name +
+              " - " +
+              formatInTimeZone(activeJurnal.date, "UTC", "dd.MM.yyyy")}
+        </h1>
 
-      <div className="mt-3 flex justify-between mb-3" onClick={exportToExcel}>
+        <button className="cursor-pointer" onClick={() => setEditModal(true)}>
+          <EditIcon />
+        </button>
+      </div>
+
+      <div
+        className="mt-3 flex justify-between mb-3"
+        onClick={() => exportToExcel(attendances)}
+      >
         <div></div>
+
         <button
-          className="bg-green text-white py-2 px-2 rounded-md cursor-pointer font-medium"
-          onClick={exportToExcel}
+          className="bg-green text-white p-2 px-3 rounded-md cursor-pointer"
+          onClick={() => exportToExcel(attendances)}
         >
           Excelga saqlash
         </button>
@@ -89,21 +66,23 @@ export default function Jurnal({ users }: UsersType) {
           </tr>
         </thead>
         <tbody>
-          {users?.map((user: any) => (
-            <tr key={user._id} className="border border-gray">
+          {attendances?.map((attendance: any) => (
+            <tr key={attendance._id} className="border border-gray">
               <td className="border border-gray  px-2">
-                {user?.employeeId?.bolim}
+                {attendance?.employeeId?.bolim}
               </td>
               <td className="border border-gray  px-2">
-                {user?.employeeId?.name}
+                {attendance?.employeeId?.name}
               </td>
               <td className="border border-gray  px-2">
-                {format(new Date(user?.date), "dd.MM.yyyy HH.mm.ss")}
+                {format(new Date(attendance?.date), "dd.MM.yyyy HH.mm.ss")}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {editModal && <EditActiveJurnal onClose={() => setEditModal(false)} />}
     </div>
   );
 }

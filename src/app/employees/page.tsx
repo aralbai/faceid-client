@@ -35,7 +35,7 @@ export default function Employees() {
         </div>
 
         <ul>
-          {bolims.map((bolim) => (
+          {bolims.map((bolim: any) => (
             <li key={bolim._id}>
               <div className="p-3 border rounded-md mb-2 flex items-center justify-between">
                 <Link href={`/employees/${bolim._id}`}>

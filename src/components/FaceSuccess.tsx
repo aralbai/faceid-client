@@ -52,7 +52,7 @@ export default function FaceSuccess({ users }: any) {
               alt=""
             />
           ) : (
-            <div className="text-sm text-gray-400">No Image</div>
+            <img src="/images/noavatar.jpg" alt="" />
           )}
         </div>
 
