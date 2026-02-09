@@ -28,7 +28,6 @@ export default function Camera() {
       await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/employee/get-terminal-total`)
         .then((res) => {
-          console.log("Response from camera API:", res.data);
           setEmployeesInCamera(res.data);
         })
         .catch((err) => {
@@ -36,26 +35,53 @@ export default function Camera() {
         });
     };
 
-    const fetchFacesInCamera = async () => {
-      await axios
-        .post(
-          `${process.env.NEXT_PUBLIC_API_URL}/employee/get-terminal-face-total`,
-        )
-        .then((res) => {
-          console.log("Response from camera API:", res.data);
-          setFacesInCamera(res.data);
-        })
-        .catch((err) => {
-          console.error("Error fetching faces in camera:", err);
-        });
-    };
+    // const fetchFacesInCamera = async () => {
+    //   await axios
+    //     .post(
+    //       `${process.env.NEXT_PUBLIC_API_URL}/employee/get-terminal-face-total`,
+    //     )
+    //     .then((res) => {
+    //       setFacesInCamera(res.data);
+    //     })
+    //     .catch((err) => {
+    //       console.error("Error fetching faces in camera:", err);
+    //     });
+    // };
 
     fetchEmployeesInDb();
     fetchEmployeesInCamera();
-    fetchFacesInCamera();
+    // fetchFacesInCamera();
   }, []);
 
-  console.log("Faces in Camera:", facesInCamera);
+  const handleSync = async () => {
+    await axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/employee/syncall`)
+      .then((res) => {
+        console.log("Sync response:", res.data);
+        alert(
+          `${res.data.message}: ${res.data.stats.totalInDb} / ${res.data.stats.syncedToTerminal}`,
+        );
+      })
+      .catch((err) => {
+        console.error("Error syncing employees:", err);
+        alert("Sinxronizatsiya qilishda xatolik yuz berdi");
+      });
+  };
+
+  const handleFaceSync = async () => {
+    await axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/employee/syncFacesToTerminal`)
+      .then((res) => {
+        console.log("Face sync response:", res.data);
+        alert(
+          `${res.data.message}: ${res.data.stats.totalInDb} / ${res.data.stats.syncedToTerminal}`,
+        );
+      })
+      .catch((err) => {
+        console.error("Error syncing faces:", err);
+        alert("Sinxronizatsiya qilishda xatolik yuz berdi");
+      });
+  };
 
   return (
     <div className="p-5 ">
@@ -67,6 +93,7 @@ export default function Camera() {
           <table className="overflow-auto p-5 w-full">
             <thead>
               <tr className="text-left">
+                <th className="border-b border-gray p-2">Nomi</th>
                 <th className="border-b border-gray p-2">Ma'lumotlar bazasi</th>
                 <th className="border-b border-gray p-2">Terminal</th>
                 <th className="border-b border-gray p-2">Boshlanish vaqti</th>
@@ -76,6 +103,7 @@ export default function Camera() {
 
             <tbody>
               <tr className="text-left">
+                <th className="border-b border-gray p-2">Xodim</th>
                 <th className="border-b border-gray p-2">
                   {employeesInDb.length}
                 </th>
@@ -83,7 +111,29 @@ export default function Camera() {
                   {employesInCamera?.totalEmployees}
                 </th>
                 <th className="border-b border-gray p-2">
-                  <button className="bg-green text-white px-3 py-1 rounded-md cursor-pointer">
+                  <button
+                    className="bg-green text-white px-3 py-1 rounded-md cursor-pointer"
+                    onClick={handleSync}
+                  >
+                    Sinxronizatsiya qilish
+                  </button>
+                </th>
+                <th className="border-b border-gray p-2"></th>
+              </tr>
+
+              <tr className="text-left">
+                <th className="border-b border-gray p-2">Face</th>
+                <th className="border-b border-gray p-2">
+                  {employeesInDb.length}
+                </th>
+                <th className="border-b border-gray p-2">
+                  {employesInCamera?.totalEmployees}
+                </th>
+                <th className="border-b border-gray p-2">
+                  <button
+                    className="bg-green text-white px-3 py-1 rounded-md cursor-pointer"
+                    onClick={handleFaceSync}
+                  >
                     Sinxronizatsiya qilish
                   </button>
                 </th>

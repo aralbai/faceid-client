@@ -25,6 +25,7 @@ export default function Home() {
 
   useEffect(() => {
     socket.on("face-success", () => {
+      console.log("🟢 SOCKET RECEIVED:", Date.now());
       setReloadAttendances((prev) => !prev); // 🔥 realtime refresh
     });
 
@@ -41,7 +42,10 @@ export default function Home() {
       {/* CENTER SECTION  */}
       <div className="">
         <div className="sticky top-0">
-          {/* <FaceSuccess users={users} /> */}
+          <FaceSuccess
+            attendances={attendances}
+            reloadAttendances={reloadAttendances}
+          />
         </div>
 
         <Jurnal

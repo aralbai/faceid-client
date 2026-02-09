@@ -28,14 +28,16 @@ export default function Jurnal({ attendances, setReloadAttendances }: any) {
     setReloadAttendances((prev: any) => !prev);
   }, [editModal]);
 
+  console.log(attendances);
+
   return (
     <div className="w-full bg-white rounded-2xl p-5 flex flex-col shadow-card">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-center font-medium">
-          {activeJurnal.name &&
+          {activeJurnal?.name &&
             activeJurnal?.name +
               " - " +
-              formatInTimeZone(activeJurnal.date, "UTC", "dd.MM.yyyy")}
+              formatInTimeZone(activeJurnal?.date, "UTC", "dd.MM.yyyy")}
         </h1>
 
         <button className="cursor-pointer" onClick={() => setEditModal(true)}>
@@ -66,19 +68,20 @@ export default function Jurnal({ attendances, setReloadAttendances }: any) {
           </tr>
         </thead>
         <tbody>
-          {attendances?.map((attendance: any) => (
-            <tr key={attendance._id} className="border border-gray">
-              <td className="border border-gray  px-2">
-                {attendance?.employeeId?.bolim}
-              </td>
-              <td className="border border-gray  px-2">
-                {attendance?.employeeId?.name}
-              </td>
-              <td className="border border-gray  px-2">
-                {format(new Date(attendance?.date), "dd.MM.yyyy HH.mm.ss")}
-              </td>
-            </tr>
-          ))}
+          {Array.isArray(attendances) &&
+            attendances.map((attendance: any) => (
+              <tr key={attendance._id} className="border border-gray">
+                <td className="border border-gray px-2">
+                  {attendance?.employeeId?.bolim?.name}
+                </td>
+                <td className="border border-gray px-2">
+                  {attendance?.employeeId?.name}
+                </td>
+                <td className="border border-gray px-2">
+                  {format(new Date(attendance?.date), "dd.MM.yyyy HH.mm.ss")}
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
 
