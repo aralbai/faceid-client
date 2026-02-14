@@ -72,7 +72,6 @@ export default function Camera() {
     await axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/employee/syncFacesToTerminal`)
       .then((res) => {
-        console.log("Face sync response:", res.data);
         alert(
           `${res.data.message}: ${res.data.stats.totalInDb} / ${res.data.stats.syncedToTerminal}`,
         );

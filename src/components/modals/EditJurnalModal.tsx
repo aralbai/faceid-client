@@ -67,8 +67,8 @@ export default function EditJurnalModal({
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
 
       {/* modal */}
-      <div className="relative w-[20%] h-screen bg-white overflow-y-auto">
-        <div className="p-4 flex justify-between items-center border-b">
+      <div className="relative w-[80%] lg:w-[20%] h-screen bg-white overflow-y-auto">
+        <div className="p-4 flex justify-between items-center">
           <h2 className="text-lg font-semibold">Jurnalni tahrirlash</h2>
 
           <button onClick={onClose} className="cursor-pointer">

@@ -1,4 +1,3 @@
-import { formatInTimeZone } from "date-fns-tz";
 import { format } from "date-fns";
 import * as XLSX from "xlsx";
 
@@ -6,11 +5,12 @@ import * as XLSX from "xlsx";
 export   const exportToExcel = (attendances: any) => {
     if (!attendances || attendances.length === 0) return;
 
+
     const data = attendances.map((attendance: any) => ({
-      "Bo‘lim": attendance?.employeeId?.bolim || "",
+      "Bo'lim": attendance?.employeeId?.bolim?.name || "",
       "Hodim F.I.SH": attendance?.employeeId?.name || "",
-      "Kelgan vaqti": format(new Date(attendance?.date), "dd.MM.yyyy HH:mm:ss") || "",
-      "Ketgan vaqti": "-", // agar yo‘q bo‘lsa
+      "Kelgan vaqti": attendance?.startDate ? format(new Date(attendance?.startDate), "dd.MM.yyyy HH:mm:ss") : "",
+      "Ketgan vaqti": attendance?.endDate ? format(new Date(attendance?.endDate), "dd.MM.yyyy HH:mm:ss") : "",
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(data);

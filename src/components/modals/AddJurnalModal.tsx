@@ -41,7 +41,7 @@ export default function AddJurnalModal({ onClose }: any) {
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
 
       {/* modal */}
-      <div className="relative w-[20%] h-screen bg-white overflow-y-auto">
+      <div className="relative w-[80%] lg:w-[20%] h-screen bg-white overflow-y-auto">
         <div className="p-4 flex justify-between items-center">
           <h2 className="text-lg font-semibold">Yangi tadbir qo'shish</h2>
 
@@ -57,13 +57,17 @@ export default function AddJurnalModal({ onClose }: any) {
               <label className="block text-sm font-medium mb-1">
                 Tadbir nomi
               </label>
-              <input
-                type="text"
+              <select
+                name="jurnalName"
+                id="jurnalName"
                 className="w-full border border-gray-300 rounded px-3 py-2"
                 value={jurnal.name}
                 onChange={(e) => setJurnal({ ...jurnal, name: e.target.value })}
                 required
-              />
+              >
+                <option value="">Tadbir tanlang</option>
+                <option value="Sport">Sport</option>
+              </select>
             </div>
             <div className="mb-4">
               <label className="block text-sm font-medium mb-1">Sana</label>

@@ -5,6 +5,7 @@ import { socket } from "@/socket";
 import FaceSuccess from "@/components/FaceSuccess";
 import TopCounter from "@/components/TopCounter";
 import Jurnal from "@/components/Jurnal";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   const [attendances, setAttendances] = useState([]);
@@ -35,23 +36,25 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-gray h-full p-5">
-      {/* TOP SECTION  */}
-      <TopCounter attendance={attendances} />
+    <div className="bg-gray h-full">
+      <div className="p-1 lg:p-5">
+        {/* TOP SECTION  */}
+        <TopCounter attendance={attendances} />
 
-      {/* CENTER SECTION  */}
-      <div className="">
-        <div className="sticky top-0">
-          <FaceSuccess
+        {/* CENTER SECTION  */}
+        <div className="">
+          <div className="sticky top-0">
+            <FaceSuccess
+              attendances={attendances}
+              reloadAttendances={reloadAttendances}
+            />
+          </div>
+
+          <Jurnal
             attendances={attendances}
-            reloadAttendances={reloadAttendances}
+            setReloadAttendances={setReloadAttendances}
           />
         </div>
-
-        <Jurnal
-          attendances={attendances}
-          setReloadAttendances={setReloadAttendances}
-        />
       </div>
     </div>
   );

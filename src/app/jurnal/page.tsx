@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "@/components/Navbar";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddJurnalModal from "@/components/modals/AddJurnalModal";
@@ -53,9 +52,7 @@ export default function Jurnal() {
 
   return (
     <div>
-      <Navbar />
-
-      <div className="p-5">
+      <div className="p-2 lg:p-5">
         <div className="mb-5 flex items-center justify-between">
           <h1 className="text-2xl">Jurnal</h1>
 
@@ -67,8 +64,8 @@ export default function Jurnal() {
           </button>
         </div>
 
-        <div className="bg-white rounded-xl p-5 shadow-card">
-          <table className="overflow-auto p-5 w-full">
+        <div className="bg-white overflow-x-auto rounded-xl p-5 shadow-card">
+          <table className="overflowx-x-auto p-5 w-full">
             <thead>
               <tr className="text-left">
                 <th className="border-b border-gray p-2">Tadbir nomi</th>

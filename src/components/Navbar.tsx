@@ -1,17 +1,19 @@
+"use client";
+
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 
-export default function Navbar() {
+type Props = {
+  setSidebarOpen: (value: boolean) => void;
+};
+
+export default function Navbar({ setSidebarOpen }: Props) {
   return (
-    <div className="sticky top-0 border-b-2 bg-gray border-b-border-bottom shodaw-card p-5 flex  justify-between ">
-      <div>
+    <div className="sticky top-0 bg-white shadow-card p-3 lg:p-5 flex justify-between mb-2 lg:mb-4">
+      <button className="lg:hidden" onClick={() => setSidebarOpen(true)}>
         <MenuIcon />
-      </div>
+      </button>
 
-      <div className="bg-white w-[20%] p-2 px-3 rounded-md flex justify-between gap-2 shadow-input">
-        <input type="text" className="outline-none w-full" />
-        <SearchIcon />
-      </div>
+      <div></div>
     </div>
   );
 }

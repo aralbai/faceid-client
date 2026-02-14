@@ -17,7 +17,7 @@ export default function TopCounter({ attendance }: { attendance: any }) {
     fetchEmployes();
   }, []);
   return (
-    <div className="bg-green rounded-md p-3">
+    <div className="bg-green rounded-md p-2 lg:p-5">
       <div className="text-white flex justify-between items-center">
         <h1>Shaxsiy tarkib soni:</h1>
         <b className="text-md"> {employee.length}</b>

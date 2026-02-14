@@ -1,7 +1,6 @@
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { format } from "date-fns";
 export default function FaceSuccess({ users, reloadAttendances }: any) {
   const [lastEmployee, setLastEmployee] = useState({
     name: "",
@@ -12,6 +11,8 @@ export default function FaceSuccess({ users, reloadAttendances }: any) {
         name: "",
       },
     },
+    startDate: "",
+    endDate: "",
   });
 
   useEffect(() => {
@@ -35,9 +36,9 @@ export default function FaceSuccess({ users, reloadAttendances }: any) {
   const imageName = formatEmployeeImageName(lastEmployee?.employeeId?.imageUrl);
 
   return (
-    <div className="sticky top-0 bg-white rounded-md mt-3 mb-3 flex justify-between items-center px-4 py-2 shadow-card">
-      <div className="flex gap-5 items-center">
-        <div className="h-25 w-25 rounded-full border-3 border-green overflow-hidden flex items-center justify-center p-2">
+    <div className="sticky top-0 bg-white rounded-md mt-3 mb-3 flex justify-between items-center px-2 lg:px-4 py-2 shadow-card">
+      <div className="flex gap-2 lg:gap-5 items-center">
+        <div className="h-20 w-20 lg:h-25 lg:w-25 rounded-full border-3 border-green overflow-hidden flex items-center justify-center p-2">
           {imageName ? (
             <img className="" src={`/images/employee/${imageName}`} alt="" />
           ) : (
@@ -46,9 +47,20 @@ export default function FaceSuccess({ users, reloadAttendances }: any) {
         </div>
 
         <div>
-          <h1 className="font-bold">{lastEmployee?.name}</h1>
-          <p>{lastEmployee?.employeeNo}</p>
-          <p>{lastEmployee?.employeeId?.bolim?.name}</p>
+          <h1 className="text-sm lg:text-lg font-bold">{lastEmployee?.name}</h1>
+          <p className="text-xs lg:text-sm">
+            {lastEmployee?.employeeId?.bolim?.name}
+          </p>
+          <p className="text-xs lg:text-sm">
+            <b>Keldi:</b>
+            {lastEmployee?.startDate &&
+              format(new Date(lastEmployee?.startDate), "dd.MM.yyyy HH:mm:ss")}
+          </p>
+          <p className="text-xs lg:text-sm">
+            <b>Ketdi:</b>
+            {lastEmployee?.endDate &&
+              format(new Date(lastEmployee?.endDate), "dd.MM.yyyy HH:mm:ss")}
+          </p>
         </div>
       </div>
     </div>

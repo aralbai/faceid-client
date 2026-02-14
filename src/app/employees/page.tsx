@@ -23,8 +23,6 @@ export default function Employees() {
 
   return (
     <div>
-      <Navbar />
-
       <div className="p-5">
         <div className="mb-5 flex items-center justify-between">
           <h1 className="text-2xl">Sohaviy xizmatlar</h1>
@@ -34,10 +32,10 @@ export default function Employees() {
           </button>
         </div>
 
-        <ul>
+        <ul className="rounded-xl overflow-hidden">
           {bolims.map((bolim: any) => (
             <li key={bolim._id}>
-              <div className="p-3 border rounded-md mb-2 flex items-center justify-between">
+              <div className="p-2 bg-white flex items-center justify-between border-b border-gray">
                 <Link href={`/employees/${bolim._id}`}>
                   <h2 className="text-lg font-semibold">{bolim.name}</h2>
                 </Link>
