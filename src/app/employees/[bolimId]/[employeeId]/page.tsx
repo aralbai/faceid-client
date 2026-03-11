@@ -1,7 +1,7 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
 import axios from "axios";
+import { format } from "date-fns";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -23,22 +23,13 @@ export default function SingleEmployee() {
   const [bolim, setBolim] = useState<Bolim>();
   const pathname = usePathname();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [attendances, setAttendances] = useState([]);
+  const [statistics, setStatistics] = useState<any>();
 
   const bolimId = pathname.split("/")[2];
   const employeeId = pathname.split("/")[3];
 
   useEffect(() => {
-    const fetchEmployees = async () => {
-      await axios
-        .get(`${process.env.NEXT_PUBLIC_API_URL}/employee/${employeeId}`)
-        .then((res) => {
-          setEmployee(res.data);
-        })
-        .catch((err) => {
-          console.error("Error fetching employees:", err);
-        });
-    };
-
     const fetchBolim = async () => {
       await axios
         .get(`${process.env.NEXT_PUBLIC_API_URL}/bolim/${bolimId}`)
@@ -50,9 +41,28 @@ export default function SingleEmployee() {
         });
     };
 
+    const fetchAttendances = async () => {
+      await axios
+        .get(
+          `${process.env.NEXT_PUBLIC_API_URL}/employee/attendances/${employeeId}`,
+        )
+        .then((res) => {
+          console.log(res.data);
+          setAttendances(res.data?.attendances);
+          setEmployee(res?.data?.employee);
+          setStatistics(res?.data?.statistics);
+        })
+        .catch((err) => {
+          console.error("Error fetching employees:", err);
+        });
+      length;
+    };
+
     fetchBolim();
-    fetchEmployees();
+    fetchAttendances();
   }, [employeeId]);
+
+  console.log(attendances);
 
   return (
     <div>
@@ -69,43 +79,87 @@ export default function SingleEmployee() {
           <i>{employee?.name}</i>
         </div>
 
-        <div className="mb-5 flex items-center justify-between">
-          <h1 className="text-2xl">Xodimlar</h1>
+        <div className="bg-white flex gap-5 shadow-card items-center p-5">
+          <div className="w-[20%] rounded-md border-2 border-gray p-5">
+            <img
+              src={`/images/employee/${employee?.imageUrl}`}
+              alt="employee"
+              onClick={() =>
+                setPreviewImage(`/images/employee/${employee?.imageUrl}`)
+              }
+              className="w-full object-contain cursor-pointer hover:opacity-80 transition"
+            />
+          </div>
 
-          <button className="bg-green text-white px-4 py-2 rounded-md cursor-pointer">
-            Yangi xodim qo'shish
-          </button>
+          <ul className="w-[80%] flex-1 overflow-auto rounded-xl p-5  flex flex-col">
+            <li className="p-2 flex justify-center"></li>
+            <li className=" font-bold">{employee?.name}</li>
+            <li className="">{employee?.employeeNo}</li>
+            <li className="">{employee?.unvon}</li>
+            <li className="">{employee?.lavozim}</li>
+            <li className="border-b-2 border-gray my-2"></li>
+            <li className="">
+              Davomat ko'rsatkishi: <b> {statistics?.attendancePercentage} %</b>
+            </li>
+            <li className="">
+              Umumiy tadbirlar soni: <b>{statistics?.totalJurnals}</b>
+            </li>
+            <li className="">
+              Qatnashgan: <b>{statistics?.attendedCount}</b>
+            </li>
+            <li className="">
+              Sababli: <b>{statistics?.excusedCount}</b>
+            </li>
+            <li className="">
+              Qatnashmagan: <b>{statistics?.missedCount}</b>
+            </li>
+          </ul>
         </div>
 
-        <div className="bg-white w-full overflow-auto rounded-xl p-5 shadow-card">
+        <div className="bg-white w-full overflow-auto rounded-xl p-5 shadow-card mt-5">
           <table className="overflow-x-auto w-full">
             <thead>
               <tr className="border-b border-gray text-left">
-                <th className="p-2">Rasmi</th>
-                <th className="p-2">Xodim F.I.SH</th>
+                <th className="p-2">Tadbir</th>
+                <th className="p-2">Sana</th>
                 <th className="p-2">ID raqami</th>
-                <th className="p-2">Unvoni</th>
-                <th className="p-2">Lavozimi</th>
+
                 <th className="p-2"></th>
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b border-gray">
-                <td className="p-2">
-                  <img
-                    src={`/images/employee/${employee?.imageUrl}`}
-                    alt="employee"
-                    onClick={() =>
-                      setPreviewImage(`/images/employee/${employee?.imageUrl}`)
-                    }
-                    className="w-10 rounded-md object-cover cursor-pointer hover:opacity-80 transition"
-                  />
-                </td>
-                <td className="p-2">{employee?.name}</td>
-                <td className="p-2">{employee?.employeeNo}</td>
-                <td className="p-2">{employee?.unvon}</td>
-                <td className="p-2">{employee?.lavozim}</td>
-              </tr>
+              {attendances?.map((attendance: any) => (
+                <tr key={attendance.jurnalId} className="border-b border-gray">
+                  <td className="p-2">{attendance?.jurnalName}</td>
+                  <td className="p-2">
+                    {attendance?.date &&
+                      format(new Date(attendance?.date), "dd.MM.yyyy")}
+                  </td>
+                  <td>
+                    <b
+                      className={
+                        attendance?.status === "Qatnashmagan"
+                          ? "bg-red p-2 rounded-md py-1"
+                          : attendance?.status === "Qatnashgan"
+                            ? "bg-green p-2 rounded-md py-1"
+                            : "bg-yellow-300 p-2 rounded-md py-1"
+                      }
+                    >
+                      {attendance?.status}
+                    </b>
+                  </td>
+                  <td className="p-2">
+                    {attendance?.startDate
+                      ? format(new Date(attendance?.startDate), "HH:mm:ss")
+                      : "-"}
+                  </td>
+                  <td className="p-2">
+                    {attendance?.endDate
+                      ? format(new Date(attendance?.endDate), "dd.MM.yyyy")
+                      : "-"}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

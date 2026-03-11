@@ -79,10 +79,11 @@ export default function Jurnal({ attendances, setReloadAttendances }: any) {
                     {attendance?.employeeId?.name}
                   </td>
                   <td className="border border-gray px-2 py-1 whitespace-nowrap">
-                    {format(
-                      new Date(attendance?.startDate),
-                      "dd.MM.yyyy HH.mm.ss",
-                    )}
+                    {attendance?.startDate &&
+                      format(
+                        new Date(attendance?.startDate),
+                        "dd.MM.yyyy HH.mm.ss",
+                      )}
                   </td>
                   <td className="border border-gray px-2 py-1 whitespace-nowrap">
                     {attendance?.endDate &&
